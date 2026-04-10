@@ -3,13 +3,22 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: FlowDesk API specification
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: dashboard
+    description: Dashboard statistics and activity
+  - name: commands
+    description: Command center operations
+  - name: history
+    description: History and activity logs
+  - name: settings
+    description: User settings and preferences
+
 paths:
   /healthz:
     get:
@@ -24,6 +33,292 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /dashboard/stats:
+    get:
+      operationId: getDashboardStats
+      tags: [dashboard]
+      summary: Get dashboard statistics
+      description: Returns overview stats for the dashboard
+      responses:
+        "200":
+          description: Dashboard statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardStats"
+
+  /dashboard/activity:
+    get:
+      operationId: getDashboardActivity
+      tags: [dashboard]
+      summary: Get recent activity feed
+      description: Returns recent activity items for the dashboard feed
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: Recent activity
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ActivityItem"
+
+  /dashboard/chart-data:
+    get:
+      operationId: getDashboardChartData
+      tags: [dashboard]
+      summary: Get chart data
+      description: Returns daily usage data for charts
+      responses:
+        "200":
+          description: Chart data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ChartDataPoint"
+
+  /commands:
+    get:
+      operationId: listCommands
+      tags: [commands]
+      summary: List all commands
+      description: Returns all saved commands/workflows
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of commands
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Command"
+    post:
+      operationId: createCommand
+      tags: [commands]
+      summary: Create a command
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCommandBody"
+      responses:
+        "201":
+          description: Created command
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Command"
+
+  /commands/{id}:
+    get:
+      operationId: getCommand
+      tags: [commands]
+      summary: Get a command by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Command details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Command"
+    put:
+      operationId: updateCommand
+      tags: [commands]
+      summary: Update a command
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCommandBody"
+      responses:
+        "200":
+          description: Updated command
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Command"
+    delete:
+      operationId: deleteCommand
+      tags: [commands]
+      summary: Delete a command
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted
+
+  /commands/{id}/execute:
+    post:
+      operationId: executeCommand
+      tags: [commands]
+      summary: Execute a command
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Execution result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExecutionResult"
+
+  /history:
+    get:
+      operationId: listHistory
+      tags: [history]
+      summary: List history entries
+      description: Returns paginated history/log entries
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: type
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: History entries
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HistoryResponse"
+
+  /history/summary:
+    get:
+      operationId: getHistorySummary
+      tags: [history]
+      summary: Get history summary
+      description: Returns aggregated counts and stats for history
+      responses:
+        "200":
+          description: History summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HistorySummary"
+
+  /settings:
+    get:
+      operationId: getSettings
+      tags: [settings]
+      summary: Get user settings
+      responses:
+        "200":
+          description: User settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Settings"
+    put:
+      operationId: updateSettings
+      tags: [settings]
+      summary: Update user settings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateSettingsBody"
+      responses:
+        "200":
+          description: Updated settings
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Settings"
+
+  /settings/shortcuts:
+    get:
+      operationId: listShortcuts
+      tags: [settings]
+      summary: List keyboard shortcuts
+      responses:
+        "200":
+          description: Keyboard shortcuts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Shortcut"
+    put:
+      operationId: updateShortcuts
+      tags: [settings]
+      summary: Update keyboard shortcuts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/UpdateShortcutBody"
+      responses:
+        "200":
+          description: Updated shortcuts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Shortcut"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +329,353 @@ components:
       required:
         - status
 
+    DashboardStats:
+      type: object
+      properties:
+        totalCommands:
+          type: integer
+        executionsToday:
+          type: integer
+        executionsThisWeek:
+          type: integer
+        successRate:
+          type: number
+        avgExecutionTime:
+          type: number
+        activeWorkflows:
+          type: integer
+        clipboardItems:
+          type: integer
+        uptime:
+          type: string
+      required:
+        - totalCommands
+        - executionsToday
+        - executionsThisWeek
+        - successRate
+        - avgExecutionTime
+        - activeWorkflows
+        - clipboardItems
+        - uptime
+
+    ActivityItem:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: [command_executed, command_created, command_updated, shortcut_triggered, clipboard_copy, settings_changed]
+        title:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum: [success, error, warning, info]
+        timestamp:
+          type: string
+        commandId:
+          type: string
+      required:
+        - id
+        - type
+        - title
+        - status
+        - timestamp
+
+    ChartDataPoint:
+      type: object
+      properties:
+        date:
+          type: string
+        executions:
+          type: integer
+        errors:
+          type: integer
+        avgTime:
+          type: number
+      required:
+        - date
+        - executions
+        - errors
+        - avgTime
+
+    Command:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        trigger:
+          type: string
+        script:
+          type: string
+        shortcut:
+          type: string
+        status:
+          type: string
+          enum: [active, inactive, draft]
+        executionCount:
+          type: integer
+        lastExecuted:
+          type: string
+        avgExecutionTime:
+          type: number
+        tags:
+          type: array
+          items:
+            type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+      required:
+        - id
+        - name
+        - category
+        - status
+        - executionCount
+        - createdAt
+
+    CreateCommandBody:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        trigger:
+          type: string
+        script:
+          type: string
+        shortcut:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+        - name
+        - category
+
+    UpdateCommandBody:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        trigger:
+          type: string
+        script:
+          type: string
+        shortcut:
+          type: string
+        status:
+          type: string
+          enum: [active, inactive, draft]
+        tags:
+          type: array
+          items:
+            type: string
+
+    ExecutionResult:
+      type: object
+      properties:
+        id:
+          type: string
+        commandId:
+          type: string
+        status:
+          type: string
+          enum: [success, error]
+        output:
+          type: string
+        error:
+          type: string
+        executionTime:
+          type: number
+        executedAt:
+          type: string
+      required:
+        - id
+        - commandId
+        - status
+        - executionTime
+        - executedAt
+
+    HistoryEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        commandId:
+          type: string
+        commandName:
+          type: string
+        type:
+          type: string
+        status:
+          type: string
+          enum: [success, error, warning]
+        output:
+          type: string
+        error:
+          type: string
+        executionTime:
+          type: number
+        triggeredBy:
+          type: string
+          enum: [manual, shortcut, schedule, api]
+        timestamp:
+          type: string
+      required:
+        - id
+        - type
+        - status
+        - executionTime
+        - triggeredBy
+        - timestamp
+
+    HistoryResponse:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: "#/components/schemas/HistoryEntry"
+        total:
+          type: integer
+        page:
+          type: integer
+        totalPages:
+          type: integer
+      required:
+        - entries
+        - total
+        - page
+        - totalPages
+
+    HistorySummary:
+      type: object
+      properties:
+        totalExecutions:
+          type: integer
+        successCount:
+          type: integer
+        errorCount:
+          type: integer
+        warningCount:
+          type: integer
+        mostUsedCommand:
+          type: string
+        peakHour:
+          type: string
+      required:
+        - totalExecutions
+        - successCount
+        - errorCount
+        - warningCount
+
+    Settings:
+      type: object
+      properties:
+        theme:
+          type: string
+          enum: [dark, light, system]
+        language:
+          type: string
+        notifications:
+          type: boolean
+        autoStart:
+          type: boolean
+        minimizeToTray:
+          type: boolean
+        showInDock:
+          type: boolean
+        globalShortcutEnabled:
+          type: boolean
+        clipboardHistoryLimit:
+          type: integer
+        defaultCategory:
+          type: string
+        analyticsEnabled:
+          type: boolean
+      required:
+        - theme
+        - notifications
+        - autoStart
+        - globalShortcutEnabled
+
+    UpdateSettingsBody:
+      type: object
+      properties:
+        theme:
+          type: string
+          enum: [dark, light, system]
+        language:
+          type: string
+        notifications:
+          type: boolean
+        autoStart:
+          type: boolean
+        minimizeToTray:
+          type: boolean
+        showInDock:
+          type: boolean
+        globalShortcutEnabled:
+          type: boolean
+        clipboardHistoryLimit:
+          type: integer
+        defaultCategory:
+          type: string
+        analyticsEnabled:
+          type: boolean
+
+    Shortcut:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        keys:
+          type: string
+        action:
+          type: string
+        enabled:
+          type: boolean
+        category:
+          type: string
+      required:
+        - id
+        - name
+        - keys
+        - action
+        - enabled
+
+    UpdateShortcutBody:
+      type: object
+      properties:
+        id:
+          type: string
+        keys:
+          type: string
+        enabled:
+          type: boolean
+      required:
+        - id
+        - keys
+        - enabled

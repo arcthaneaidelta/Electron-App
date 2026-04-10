@@ -1,0 +1,245 @@
+You are a senior-level product engineer, UI/UX architect, and desktop application specialist.
+
+Your task is to design and build a **high-end, production-grade Electron desktop application (Windows + macOS)** inspired by Whisperflow-level functionality.
+
+This is NOT a basic prototype. This must look and feel like a **$10,000+ premium SaaS desktop product**.
+
+---
+
+# 🚨 CORE OBJECTIVE
+
+Create a **visually stunning, insanely polished, buttery-smooth desktop application** with:
+
+* Enterprise-level UX
+* Pixel-perfect UI
+* High-performance animations (60fps, no lag)
+* Deep attention to micro-interactions
+
+The result should feel like:
+👉 Linear + Raycast + Notion + Arc Browser combined
+👉 Clean, powerful, premium (NOT neon, NOT flashy AI gimmick)
+
+---
+
+# 🎨 DESIGN DIRECTION (VERY IMPORTANT)
+
+## ❌ DO NOT:
+
+* Do NOT use neon gradients or “glowing AI” styles
+* Do NOT use over-saturated colors
+* Do NOT use generic Tailwind templates
+* Do NOT make it look like a web app
+
+## ✅ DO:
+
+* Use a **dark, elegant, premium color system**
+* Think: charcoal, graphite, subtle blues, muted accents
+* Glassmorphism ONLY if subtle and tasteful
+* Soft shadows, depth layering, blur, translucency
+* Clean typography (Inter / SF Pro / Geist)
+
+Design must feel:
+
+* Masculine, sharp, confident
+* Minimal but powerful
+* Like a tool used by high-performance professionals
+
+---
+
+# 🚀 LOADING EXPERIENCE (CRITICAL — HIGH PRIORITY)
+
+Create a **jaw-dropping loading screen** that alone can impress a client.
+
+Requirements:
+
+* Smooth intro animation (logo reveal or morph)
+* Subtle motion (particles, wave distortion, or depth shift)
+* Progress indicator (not boring — custom animated)
+* Micro transitions (opacity, blur, scale)
+
+This should feel like:
+👉 Opening a high-end OS or premium design software
+
+The loading screen should:
+
+* Run at 60fps
+* Transition seamlessly into the app
+* Be visually unforgettable
+
+---
+
+# 🧠 CORE FEATURES (Electron App)
+
+Implement:
+
+1. System Tray / Menu Bar Integration
+2. Global Keyboard Shortcuts
+3. Floating On-Screen Widget (toggle via hotkey)
+4. Clipboard Copy + Programmatic Paste into active apps
+5. Background process handling
+6. Native OS integrations where needed
+
+If required:
+
+* Use native modules or Electron APIs
+* Ensure cross-platform compatibility
+
+---
+
+# 🧩 APP STRUCTURE (MULTI-PAGE, COMPLEX)
+
+This MUST NOT be a simple app.
+
+Create a **full SaaS-level system with multiple sections**, such as:
+
+### Dashboard
+
+* Overview stats
+* Activity feed
+* Recent actions
+* Beautiful charts (smooth animated)
+
+### Command Center (Core Feature)
+
+* Input interface
+* AI/automation workflow style UI
+* Real-time feedback animations
+
+### History / Logs
+
+* Timeline view
+* Search + filters
+* Smooth scrolling + lazy load
+
+### Settings
+
+* Keyboard shortcut customization
+* Preferences
+* Theme tweaks
+* System integrations
+
+### Floating Widget UI
+
+* Minimal but elegant
+* Smooth open/close animation
+* Blur background
+
+---
+
+# ⚡ ANIMATIONS (EXTREME DETAIL REQUIRED)
+
+Use:
+
+* Framer Motion / Anime.js / GSAP (preferred)
+
+Implement:
+
+### Scroll Animations
+
+* Elements move with scroll
+* Parallax effects
+* Motion stops when scroll stops
+
+### Hover Animations
+
+* Buttons react with depth
+* Subtle scale + shadow transitions
+* Smooth easing (no sharp jumps)
+
+### Click Interactions
+
+* Ripple or depth press effect
+* Instant feedback
+
+### Page Transitions
+
+* Seamless transitions (no reload feel)
+* Fade + slide combos
+
+### Micro Interactions
+
+* Input focus animations
+* Toggle switches with physics
+* Tooltips with motion
+
+ALL animations must:
+
+* Feel premium
+* Be smooth (60fps)
+* Never lag
+
+---
+
+# 🧱 TECH STACK
+
+Use:
+
+* Electron (latest stable)
+* React (for UI)
+* TailwindCSS (but heavily customized)
+* Framer Motion / GSAP
+* Zustand or Redux (state)
+* Supabase (if database needed — FREE TIER ONLY)
+
+---
+
+# 🧠 DATA / BACKEND
+
+* Assume backend exists → create clean API integration layer
+* Mock APIs if needed
+* Use Supabase ONLY if persistence required
+* No paid APIs
+
+---
+
+# 🎯 PERFORMANCE
+
+* Must run smoothly on mid-range machines
+* Avoid heavy unnecessary renders
+* Optimize animations
+* Lazy load where possible
+
+---
+
+# 💎 UI DETAILS (NON-NEGOTIABLE)
+
+* Perfect spacing system
+* Consistent typography scale
+* Beautiful empty states
+* Skeleton loaders
+* Elegant modals
+* Clean icons (Lucide or similar)
+
+---
+
+# 🧪 FINAL OUTPUT
+
+Provide:
+
+1. Fully working Electron app
+2. Clean folder structure
+3. Reusable components
+4. Beautiful UI across ALL screens
+5. Production-quality code (not hacky)
+
+---
+
+# 🧠 IMPORTANT MINDSET
+
+You are NOT building:
+❌ a demo
+❌ a template
+❌ a basic MVP
+
+You ARE building:
+✅ a product that looks like it already raised funding
+✅ something that makes users say “this is premium” instantly
+
+---
+
+# 🔥 FINAL NOTE
+
+If anything is unclear:
+👉 Make the most premium, visually impressive decision possible
+
+Never settle for “good enough” — everything must feel **exceptional**.
